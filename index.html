@@ -10,19 +10,55 @@
 	
 	<body>
 		<h1>Arduino Tutorial</h1>
-		<div class="summary">
-			<h2>Summary</h2>
-			<ul>
-				<li>
-					<a href="#introduction">
-						<span class="summary-number">1.</span>
-						<span class="summary-element"></span>
-					</a>
-				</li>
-			</ul>
+		<div class="block">
+			<div class="summary">
+				<h3>Summary</h3>
+				<ul>
+					<li>
+						<a href="#introduction">
+							<span class="summary-number">1.</span>
+							<span class="summary-element">Introduction</span>
+						</a>
+					</li>
+					<li>
+						<a href="#physical-assembly">
+							<span class="summary-number">2.</span>
+							<span class="summary-element">Physical assembly</span>
+						</a>
+					</li>
+					<li>
+						<a href="#code">
+							<span class="summary-number">3.</span>
+							<span class="summary-element">Arduino code</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="introduction">
+				<h2>Introduction</h2>
+				<p>First,
+					Nous allons voir comment allumer des leds avec un petit montage arduino. Puis nous nous servirons de ça pour faire du code morse.
+					Pour ce tutoriel nous allons avoir besoin d’une carte Arduino Uno, de câble et d’une led rose (ou n’importe quel couleur, mais rose c’est plus jolie)
+				</p>
+			</div>
 		</div>
-		<div id="introduction">
-			
+		
+		<div class="block" id="physical-assembly">
+			<h2>Physical assembly</h2>
+			<p class="text">Avant de faire le code, il va falloir faire le montage physique !
+			On va brancher la borne + de la led sur un pin de l’arduino, nous on prend le 2. On va brancher le - sur le ground. On ajoute une résistance pour protéger la led (acheter une nouvelle led chaque jour ça va vite être coûteux !)
+			<br>
+			<br>
+			Pour le montage physique, c’est tout pour le moment. On a pas besoin du cablage d’un pc de la NASA non plus !
+			</p>
+		</div>
+		<div class="block" id="code">
+			<h2>Arduino code</h2>
+			<p class="text">
+			Passons à la partie la plus fun ! Le code !
+
+			Tout d'abord on va mettre dans setup certains trucs importants pour que le code marche après *faire des screen du code dans vsc*
+			</p>
 		</div>
 	</body>
 
