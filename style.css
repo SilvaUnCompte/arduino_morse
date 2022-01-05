@@ -1,7 +1,11 @@
 body {
 	margin: 0;
   text-align: center;
-  background-color:rgb(199, 199, 199);
+  background: url("image/bg.jpg");
+  max-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 h1,h2,p{
@@ -50,6 +54,7 @@ ul {
     margin-top: 3%;
     margin-bottom: 3%;
     overflow: hidden;
+    border-radius: 5px;
 }
 
 .block {
@@ -78,9 +83,7 @@ ul {
 }
 
 .summary ul li a {
-  color:black;
   font-size: 17px;
-  text-decoration: none;
 }
 
 #introduction {
@@ -103,8 +106,28 @@ ul {
   text-align: left;
   position: relative;
   left: 10vw;
+  margin-top: 25px;
 }
 
 #code {
   padding-bottom: 15px;
+}
+
+.link {
+  padding-top: 5px;
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+.left {
+  padding-right: 20px;
+}
+
+.right {
+  padding-left: 20px;
+}
+
+.no-underligne {
+  text-decoration: none;
+  color: black;
 }

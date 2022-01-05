@@ -35,34 +35,85 @@
 								<span class="summary-element">Arduino code</span>
 							</a>
 						</li>
+						<li>
+							<a href="#conclusion">
+								<span class="summary-number">4.</span>
+								<span class="summary-element">Recap</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 				<div id="introduction">
 					<h2>Introduction</h2>
-					<p>First,
-						Nous allons voir comment allumer des leds avec un petit montage arduino. Puis nous nous servirons de ça pour faire du code morse.
-						Pour ce tutoriel nous allons avoir besoin d’une carte Arduino Uno, de câble et d’une led rose (ou n’importe quel couleur, mais rose c’est plus jolie)
+					<p>
+						First, we will learn how to power LED with an arduino physical assembly. Next, we will use it to make a Morse code.
+						<br>For this tutorial we will need an Arduino Uno board, some wire and a pink led (or any color, but pink is prettier).				
 					</p>
 				</div>
 			</div>
 			
 			<div class="block" id="physical-assembly">
 				<h2>Physical assembly</h2>
-				<p class="text">Avant de faire le code, il va falloir faire le montage physique !
-				On va brancher la borne + de la led sur un pin de l’arduino, nous on prend le 2. On va brancher le - sur le ground. On ajoute une résistance pour protéger la led (acheter une nouvelle led chaque jour ça va vite être coûteux !)
-				<br>
-				<br>
-				Pour le montage physique, c’est tout pour le moment. On a pas besoin du cablage d’un pc de la NASA non plus !
+				<p class="text">
+					Before doing the code, we will have to do the physical assembly!
+					We will connect the led + pin on an arduino pin, we take pin 2. 
+					And we will connect the led - pin to the ground. We add a resistor to protect the led (buying a new led every day is going to be expensive!)
+				</p>
+				<img src="image/arduino.png" alt="Arduino assembly">
+				<p class="text">
+					For the physical setup, that's all. We don't need the wiring of a NASA PC either!
 				</p>
 			</div>
 			<div class="block" id="code">
 				<h2>Arduino code</h2>
 				<p class="text">
-				Passons à la partie la plus fun ! Le code !
-
-				Tout d'abord on va mettre dans setup certains trucs importants pour que le code marche après *faire des screen du code dans vsc*
+					Let's get to the fun part! The code!
+					<br>
+					First, we'll declare variables and put in the setup function some important stuff to make the code work.
 				</p>
 				<pre><code class="language-cpp">
+String text;
+
+String tab[36][2]
+{
+  {"a",".-"},
+  {"b","-..."},
+  {"c","-.-."},
+  {"d","-.."},
+  {"e","."},
+  {"f","..-."},
+  {"g","--."},
+  {"h","...."},
+  {"i",".."},
+  {"j",".---"},
+  {"k","-.-"},
+  {"l",".-.."},
+  {"m","--"},
+  {"n","-."},
+  {"o","---"},
+  {"p",".--."},
+  {"q","--.-"},
+  {"r",".-."},
+  {"s","..."},
+  {"t","-"},
+  {"u","..-"},
+  {"v","...-"},
+  {"w",".--"},
+  {"x","-..-"},
+  {"y","-.--"},
+  {"z","--.."},
+  {"0","-----"},
+  {"1",".----"},
+  {"2","..---"},
+  {"3","...--"},
+  {"4","....-"},
+  {"5","....."},
+  {"6","-...."},
+  {"7","--..."},
+  {"8","---.."},
+  {"9","----."}
+};
+
 void setup()
 {
   Serial.begin(9600);
@@ -70,16 +121,16 @@ void setup()
 }
 				</code></pre>
 				<p class="text">
-					Puis dans loop on va mettre le code à exécuter.
+					Then in the loop function we will put the code to execute.
 				</p>
 				<pre><code class="language-cpp">
 void loop()
 {
-  text = waitInput("Message à envoyer en Morse :");
+  text = waitInput("Message to translate in Morse code:");
 }		
 				</code></pre>
 				<p class="text">
-					Cette ligne va “appeler” la fonction waitInput qui sert à attendre que l’utilisateur écrit un truc puis appuis sur entrer.
+					This line will "call" the waitInput function which is used to wait for the user to write something and then press enter.
 				</p>
 				<pre><code class="language-cpp">
 String waitInput(String msg)
@@ -96,19 +147,216 @@ String waitInput(String msg)
 }		
 				</code></pre>
 				<p class="text">
-					Une fois qu’on a récupéré le message de l’utilisateur, il va falloir le transformer en code morse. On va donc ajouter un morceaux de code dans le loop :
+					Once the user's message has been retrieved, we have to transform it into Morse code. So we will add a piece of code in the loop function:
+				</p>
+				<pre><code class="language-cpp">
+for(int i=0; i < text.length(); i++ ) {
+  String morseCode = correspondence(String(text[i]));
+}
+				</code></pre>
+				<p class="text">
+					This gives us this code for the loop function:
 				</p>
 				<pre><code class="language-cpp">
 void loop()
 {
-  text = waitInput("Message à envoyer en Morse :");
+  text = waitInput("Message to translate in Morse code:");
   for(int i=0; i < text.length(); i++ ) {
-    String codeMorse = correspondance(String(text[i]));
+    String morseCode = correspondence(String(text[i]));
   }
 }	
 				</code></pre>
+				<p class="text">
+					This piece of code calls the "correspondence" function which is used to find what corresponds to each letter in the user’s message to the morse code. So, for this we need an array that contains the translation of each letter in morse code, and the "correspondence" function that will search in the array for each letter of the message.
+				</p>
+				<pre><code class="language-cpp">
+String correspondence(String c)
+{
+  for(int i=0;tab[i][0];i++)
+  {
+    c.toLowerCase();
+    if(tab[i][0] == c)
+    {
+      return tab[i][1];
+    }
+  }
+  return "";
+}			
+				</code></pre>
+				<p class="text">
+					We have our message in morse code now, we just have to display dots and dashes with our LED!
+				</p>
+				<pre><code class="language-cpp">
+void loop()
+{
+  text = waitInput("Message to translate in Morse code:");
+  for(int i=0; i < text.length(); i++ )
+  {
+    String morseCode = correspondence(String(text[i]));
+    for(int i=0; i < morseCode.length();i++)
+    {
+      if(String(morseCode[i])==".")
+      {
+        dot();
+      }
+      else
+      {
+        dash();
+      }
+    }
+  }
+}					
+				</code></pre>
+				<p class="text">
+					It will look at each element one by one to know if it’s a dash or a dot. If it’s a dot we call the dot function, if it's a dash we call the dash function.
+				</p>
+				<pre><code class="language-cpp">
+void dot()
+{
+  digitalWrite(2, HIGH);
+  delay(333);
+  digitalWrite(2, LOW);
+  delay(333);
+}
+
+void dash()
+{
+  digitalWrite(2, HIGH);
+  delay(1000);
+  digitalWrite(2, LOW);
+  delay(500);
+}					
+				</code></pre>
+				<p class="text">
+					These functions will power the LED more or less time. One second if it's a dash and only ⅓ second if it's a dot. We offer you the translation right here (we are really too nice!)
+				</p>
+				<img src="image/International_Morse_Code-fr.png" alt="International morse code">
 			</div>
+			<div id="conclusion">
+				<h2>Recap</h2>
+				<p class="text">
+					Ok let’s make a Rundown: user enters a message that we transform into morse code. Then we look one by one at elements, if it’s a dot we light the led quickly, if it is a dash we light it longer.
+				</p>
+				<p class="text">
+					The final code:
+				</p>
+				<pre><code class="language-cpp">
+String text;
+
+String tab[36][2]
+{
+  {"a",".-"},
+  {"b","-..."},
+  {"c","-.-."},
+  {"d","-.."},
+  {"e","."},
+  {"f","..-."},
+  {"g","--."},
+  {"h","...."},
+  {"i",".."},
+  {"j",".---"},
+  {"k","-.-"},
+  {"l",".-.."},
+  {"m","--"},
+  {"n","-."},
+  {"o","---"},
+  {"p",".--."},
+  {"q","--.-"},
+  {"r",".-."},
+  {"s","..."},
+  {"t","-"},
+  {"u","..-"},
+  {"v","...-"},
+  {"w",".--"},
+  {"x","-..-"},
+  {"y","-.--"},
+  {"z","--.."},
+  {"0","-----"},
+  {"1",".----"},
+  {"2","..---"},
+  {"3","...--"},
+  {"4","....-"},
+  {"5","....."},
+  {"6","-...."},
+  {"7","--..."},
+  {"8","---.."},
+  {"9","----."}
+};
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(2, OUTPUT);
+}
+
+void loop()
+{
+  text = waitInput("Message to translate in Morse code:");
+  for(int i=0; i < text.length(); i++ ) {
+    String codeMorse = correspondence(String(text[i]));
+    for(int i=0; i < codeMorse.length();i++)
+    {
+      if(String(codeMorse[i])==".")
+      {
+        dot();
+      }
+      else
+      {
+        dash();
+      }
+    }
+  }
+}
+
+String waitInput(String msg)
+{
+  Serial.println(msg);
+  while(Serial.available()<=0){}
+  delay(100);
+  String userInput="";
+  while(Serial.available()>0)
+  {
+    userInput+=Serial.read();
+  }
+  return String(userInput);
+}
+
+String correspondence(String c)
+{
+  for(int i=0;tab[i][0];i++)
+  {
+  c.toLowerCase();
+  if(tab[i][0] == c)
+  {
+    return tab[i][1];
+  }
+  }
+  return "";
+}
+
+void dot()
+{
+  digitalWrite(2, HIGH);
+  delay(333);
+  digitalWrite(2, LOW);
+  delay(333);
+}
+
+void dash()
+{
+  digitalWrite(2, HIGH);
+  delay(1000);
+  digitalWrite(2, LOW);
+  delay(500);
+}
+				</code></pre>
+			</div>
+			<a href="https://jardinage.lemonde.fr/images/dossiers/2021-12/chat-intelligent-102007.jpg" class="no-underligne"><< </a>
+			<a href="https://jardinage.lemonde.fr/images/dossiers/2021-12/chat-intelligent-102007.jpg" class="link left">Tutorial : basics of arduino</a>
+			<a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIob1by6WIAYwh1292PstnWZWOT-k1Rd6dyQ&usqp=CAU" class="link right">Tutorial : how to hack nasa</a>
+			<a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIob1by6WIAYwh1292PstnWZWOT-k1Rd6dyQ&usqp=CAU" class="no-underligne"> >></a>
 		</div>
+		<p style="color: aliceblue;">Shirayu and Silvathor © 2022</p>
 	</body>
 	<script>hljs.highlightAll();</script>
 
