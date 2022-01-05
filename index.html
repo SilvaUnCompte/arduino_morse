@@ -3,63 +3,113 @@
 
 	<head> 
 		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 		<meta charset="UTF-8">
 		<title>Arduino Project</title>
 		<link rel="icon" href="image/hat.png" />
 	</head> 
 	
 	<body>
-		<h1>Arduino Tutorial</h1>
-		<div class="block">
-			<div class="summary">
-				<h3>Summary</h3>
-				<ul>
-					<li>
-						<a href="#introduction">
-							<span class="summary-number">1.</span>
-							<span class="summary-element">Introduction</span>
-						</a>
-					</li>
-					<li>
-						<a href="#physical-assembly">
-							<span class="summary-number">2.</span>
-							<span class="summary-element">Physical assembly</span>
-						</a>
-					</li>
-					<li>
-						<a href="#code">
-							<span class="summary-number">3.</span>
-							<span class="summary-element">Arduino code</span>
-						</a>
-					</li>
-				</ul>
+		<div class="shadow">
+			<h1 class="title">Arduino Tutorial</h1>
+			<div class="block">
+				<div class="summary">
+					<h3>Summary</h3>
+					<ul>
+						<li>
+							<a href="#introduction">
+								<span class="summary-number">1.</span>
+								<span class="summary-element">Introduction</span>
+							</a>
+						</li>
+						<li>
+							<a href="#physical-assembly">
+								<span class="summary-number">2.</span>
+								<span class="summary-element">Physical assembly</span>
+							</a>
+						</li>
+						<li>
+							<a href="#code">
+								<span class="summary-number">3.</span>
+								<span class="summary-element">Arduino code</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="introduction">
+					<h2>Introduction</h2>
+					<p>First,
+						Nous allons voir comment allumer des leds avec un petit montage arduino. Puis nous nous servirons de ça pour faire du code morse.
+						Pour ce tutoriel nous allons avoir besoin d’une carte Arduino Uno, de câble et d’une led rose (ou n’importe quel couleur, mais rose c’est plus jolie)
+					</p>
+				</div>
 			</div>
-			<div id="introduction">
-				<h2>Introduction</h2>
-				<p>First,
-					Nous allons voir comment allumer des leds avec un petit montage arduino. Puis nous nous servirons de ça pour faire du code morse.
-					Pour ce tutoriel nous allons avoir besoin d’une carte Arduino Uno, de câble et d’une led rose (ou n’importe quel couleur, mais rose c’est plus jolie)
+			
+			<div class="block" id="physical-assembly">
+				<h2>Physical assembly</h2>
+				<p class="text">Avant de faire le code, il va falloir faire le montage physique !
+				On va brancher la borne + de la led sur un pin de l’arduino, nous on prend le 2. On va brancher le - sur le ground. On ajoute une résistance pour protéger la led (acheter une nouvelle led chaque jour ça va vite être coûteux !)
+				<br>
+				<br>
+				Pour le montage physique, c’est tout pour le moment. On a pas besoin du cablage d’un pc de la NASA non plus !
 				</p>
 			</div>
-		</div>
-		
-		<div class="block" id="physical-assembly">
-			<h2>Physical assembly</h2>
-			<p class="text">Avant de faire le code, il va falloir faire le montage physique !
-			On va brancher la borne + de la led sur un pin de l’arduino, nous on prend le 2. On va brancher le - sur le ground. On ajoute une résistance pour protéger la led (acheter une nouvelle led chaque jour ça va vite être coûteux !)
-			<br>
-			<br>
-			Pour le montage physique, c’est tout pour le moment. On a pas besoin du cablage d’un pc de la NASA non plus !
-			</p>
-		</div>
-		<div class="block" id="code">
-			<h2>Arduino code</h2>
-			<p class="text">
-			Passons à la partie la plus fun ! Le code !
+			<div class="block" id="code">
+				<h2>Arduino code</h2>
+				<p class="text">
+				Passons à la partie la plus fun ! Le code !
 
-			Tout d'abord on va mettre dans setup certains trucs importants pour que le code marche après *faire des screen du code dans vsc*
-			</p>
+				Tout d'abord on va mettre dans setup certains trucs importants pour que le code marche après *faire des screen du code dans vsc*
+				</p>
+				<pre><code class="language-cpp">
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(2, OUTPUT);
+}
+				</code></pre>
+				<p class="text">
+					Puis dans loop on va mettre le code à exécuter.
+				</p>
+				<pre><code class="language-cpp">
+void loop()
+{
+  text = waitInput("Message à envoyer en Morse :");
+}		
+				</code></pre>
+				<p class="text">
+					Cette ligne va “appeler” la fonction waitInput qui sert à attendre que l’utilisateur écrit un truc puis appuis sur entrer.
+				</p>
+				<pre><code class="language-cpp">
+String waitInput(String msg)
+{
+  Serial.println(msg);
+  while(Serial.available()<=0){}
+  delay(100);
+  String userInput="";
+  while(Serial.available()>0)
+  {
+    userInput+=Serial.read();
+  }
+  return String(userInput);
+}		
+				</code></pre>
+				<p class="text">
+					Une fois qu’on a récupéré le message de l’utilisateur, il va falloir le transformer en code morse. On va donc ajouter un morceaux de code dans le loop :
+				</p>
+				<pre><code class="language-cpp">
+void loop()
+{
+  text = waitInput("Message à envoyer en Morse :");
+  for(int i=0; i < text.length(); i++ ) {
+    String codeMorse = correspondance(String(text[i]));
+  }
+}	
+				</code></pre>
+			</div>
 		</div>
 	</body>
+	<script>hljs.highlightAll();</script>
 
 </html>
