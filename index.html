@@ -46,8 +46,8 @@
 				<div id="introduction">
 					<h2>Introduction</h2>
 					<p>
-						First, we will learn how to power LED with an arduino physical assembly. Next, we will use it to make a Morse code.
-						<br>For this tutorial we will need an Arduino Uno board, some wire and a pink led (or any color, but pink is prettier).				
+						First, we will learn how to power LED with an Arduino physical assembly. Next, we will use it to make a Morse code.
+						<br>For this tutorial we will need an Arduino Uno board, some wire and a pink LED (or any color, but pink is prettier).				
 					</p>
 				</div>
 			</div>
@@ -56,8 +56,8 @@
 				<h2>Physical assembly</h2>
 				<p class="text">
 					Before doing the code, we will have to do the physical assembly!
-					We will connect the led + pin on an arduino pin, we take pin 2. 
-					And we will connect the led - pin to the ground. We add a resistor to protect the led (buying a new led every day is going to be expensive!)
+					We will connect the LED + pin on an Arduino pin, we take pin 2. 
+					And we will connect the LED - pin to the ground. We add a resistor to protect the LED (buying a new LED every day is going to be expensive!)
 				</p>
 				<img src="image/arduino.png" alt="Arduino assembly">
 				<p class="text">
@@ -167,7 +167,7 @@ void loop()
 }	
 				</code></pre>
 				<p class="text">
-					This piece of code calls the "correspondence" function which is used to find what corresponds to each letter in the user’s message to the morse code. So, for this we need an array that contains the translation of each letter in morse code, and the "correspondence" function that will search in the array for each letter of the message.
+					This piece of code calls the "correspondence" function which is used to find what corresponds to each letter in the user’s message to the Morse code. So, for this we need an array that contains the translation of each letter in Morse code, and the "correspondence" function that will search in the array for each letter of the message.
 				</p>
 				<pre><code class="language-cpp">
 String correspondence(String c)
@@ -184,7 +184,7 @@ String correspondence(String c)
 }			
 				</code></pre>
 				<p class="text">
-					We have our message in morse code now, we just have to display dots and dashes with our LED!
+					We have our message in Morse code now, we just have to display dots and dashes with our LED!
 				</p>
 				<pre><code class="language-cpp">
 void loop()
@@ -230,12 +230,12 @@ void dash()
 				<p class="text">
 					These functions will power the LED more or less time. One second if it's a dash and only ⅓ second if it's a dot. We offer you the translation right here (we are really too nice!)
 				</p>
-				<img src="image/International_Morse_Code-fr.png" alt="International morse code">
+				<img src="image/International_Morse_Code-fr.png" alt="International Morse code">
 			</div>
 			<div id="conclusion">
 				<h2>Recap</h2>
 				<p class="text">
-					Ok let’s make a Rundown: user enters a message that we transform into morse code. Then we look one by one at elements, if it’s a dot we light the led quickly, if it is a dash we light it longer.
+					Ok let’s make a Rundown: user enters a message that we transform into Morse code. Then we look one by one at elements, if it’s a dot we light the LED quickly, if it is a dash we light it longer.
 				</p>
 				<p class="text">
 					The final code:
@@ -352,7 +352,7 @@ void dash()
 				</code></pre>
 			</div>
 			<a href="https://jardinage.lemonde.fr/images/dossiers/2021-12/chat-intelligent-102007.jpg" class="no-underligne"><< </a>
-			<a href="https://jardinage.lemonde.fr/images/dossiers/2021-12/chat-intelligent-102007.jpg" class="link left">Tutorial : basics of arduino</a>
+			<a href="https://jardinage.lemonde.fr/images/dossiers/2021-12/chat-intelligent-102007.jpg" class="link left">Tutorial : basics of Arduino</a>
 			<a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIob1by6WIAYwh1292PstnWZWOT-k1Rd6dyQ&usqp=CAU" class="link right">Tutorial : how to hack nasa</a>
 			<a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIob1by6WIAYwh1292PstnWZWOT-k1Rd6dyQ&usqp=CAU" class="no-underligne"> >></a>
 		</div>
