@@ -1,3 +1,5 @@
+html { overflow: hidden; }
+
 body {
 	margin: 0;
   text-align: center;
